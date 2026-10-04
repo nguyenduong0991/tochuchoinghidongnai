@@ -1,0 +1,9 @@
+{
+  "name": "Hệ thống Hội nghị TGPL Thành phố Đồng Nai",
+  "description": "Hệ thống điều phối, quản lý và phân tích hội nghị trợ giúp pháp lý (TGPL) Thành phố Đồng Nai",
+  "prompt": "Hệ thống quản lý hội nghị TGPL Đồng Nai",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

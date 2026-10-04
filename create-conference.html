@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng ký hội nghị - TGPL Đồng Nai</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="assets/css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-dark bg-primary">
+
+        <div class="container-fluid">
+
+            <span class="navbar-brand mb-0 h1">
+                Phần mềm quản lý hội nghị TGPL
+            </span>
+
+            <a
+                href="index.html"
+                class="btn btn-light btn-sm">
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+    <div class="container mt-4">
+
+        <div class="mb-4">
+
+            <h3>
+                Đăng ký hội nghị
+            </h3>
+
+            <p class="text-muted">
+                Nhập thông tin hội nghị cần đăng ký trên hệ thống.
+            </p>
+
+        </div>
+
+
+        <!-- THÔNG BÁO -->
+        <div
+            id="formMessage"
+            style="display:none;">
+        </div>
+
+
+        <!-- FORM -->
+        <div class="card">
+
+            <div class="card-header">
+
+                <strong>
+                    Thông tin hội nghị
+                </strong>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <form id="conferenceForm">
+
+
+                    <!-- CHỦ ĐỀ -->
+                    <div class="mb-3">
+
+                        <label
+                            for="title"
+                            class="form-label">
+
+                            Chủ đề hội nghị
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            placeholder="Nhập chủ đề hội nghị"
+                            required>
+
+                    </div>
+
+
+                    <!-- ĐƠN VỊ -->
+                    <div class="mb-3">
+
+                        <label
+                            for="organization_id"
+                            class="form-label">
+
+                            Đơn vị đăng ký
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input type="text" id="organization_name" name="organization_name" class="form-control" placeholder="Nhập tên đơn vị đăng ký" required>
+                        <select id="organization_id" name="organization_id" class="form-select" hidden disabled>
+                            <option value="">Đang tải danh sách đơn vị...</option>
+                        </select>
+
+                    </div>
+
+
+                    <!-- THỜI GIAN -->
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label
+                                for="start_time"
+                                class="form-label">
+
+                                Thời gian bắt đầu
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input
+                                type="datetime-local"
+                                id="start_time"
+                                name="start_time"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label
+                                for="end_time"
+                                class="form-label">
+
+                                Thời gian kết thúc
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input
+                                type="datetime-local"
+                                id="end_time"
+                                name="end_time"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ĐỊA ĐIỂM -->
+                    <div class="mb-3">
+
+                        <label
+                            for="location"
+                            class="form-label">
+
+                            Địa điểm
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            class="form-control"
+                            placeholder="Nhập địa điểm tổ chức">
+
+                    </div>
+
+
+                    <!-- SỐ NGƯỜI -->
+                    <div class="mb-3">
+
+                        <label
+                            for="expected_participants"
+                            class="form-label">
+
+                            Số người dự kiến
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="expected_participants"
+                            name="expected_participants"
+                            class="form-control"
+                            min="0"
+                            placeholder="Ví dụ: 100">
+
+                    </div>
+
+
+                    <!-- NỘI DUNG -->
+                    <div class="mb-3">
+
+                        <label
+                            for="description"
+                            class="form-label">
+
+                            Nội dung / mục đích hội nghị
+
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            class="form-control"
+                            rows="5"
+                            placeholder="Nhập nội dung hoặc mục đích hội nghị"></textarea>
+
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="attachments" class="form-label">Tệp đính kèm</label>
+                        <input type="file" id="attachments" name="attachments" class="form-control" multiple>
+                        <div class="form-text">Có thể chọn nhiều tệp, tối đa 20 MB mỗi tệp.</div>
+                        <div id="attachmentNotice" class="form-text mt-1"></div>
+                        <ul id="attachmentPreview" class="list-group list-group-flush mt-2"></ul>
+                    </div>
+
+                    <!-- NÚT -->
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            id="submitButton"
+                            class="btn btn-primary">
+
+                            Lưu đăng ký
+
+                        </button>
+
+
+                        <a
+                            href="conference-list.html"
+                            class="btn btn-secondary">
+
+                            Quay lại
+
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- API -->
+    <script src="assets/js/config.js?v=20261004-tunnel-1"></script>
+    <script src="assets/js/api.js?v=20261003-unit-scope-1"></script>
+    <script src="assets/js/attachments.js?v=20261003-3"></script>
+    <script src="assets/js/auth.js"></script>
+
+
+    <!-- LOGIC -->
+    <script>
+
+        const form =
+            document.getElementById(
+                "conferenceForm"
+            );
+
+
+        const messageElement =
+            document.getElementById(
+                "formMessage"
+            );
+
+
+        const submitButton =
+            document.getElementById(
+                "submitButton"
+            );
+
+        const attachmentInput = document.getElementById("attachments");
+        const attachmentPreview = document.getElementById("attachmentPreview");
+        const attachmentNotice = document.getElementById("attachmentNotice");
+        const maxAttachmentSize = 20 * 1024 * 1024;
+
+        if (isSharedAttachmentStorage()) {
+            const organizationName = document.getElementById("organization_name");
+            const organizationSelect = document.getElementById("organization_id");
+            organizationName.hidden = true;
+            organizationName.required = false;
+            organizationSelect.hidden = false;
+            organizationSelect.disabled = false;
+            getOrganizations().then(result => {
+                organizationSelect.innerHTML = '<option value="">Chọn đơn vị đăng ký</option>';
+                const organizations = result.data || [];
+                organizations.forEach(organization => {
+                    const option = document.createElement("option");
+                    option.value = organization.id;
+                    option.textContent = organization.name;
+                    organizationSelect.appendChild(option);
+                });
+                if (organizations.length === 1) organizationSelect.value = organizations[0].id;
+                if (!organizations.length) {
+                    showError("Tài khoản chưa được gắn với đơn vị. Vui lòng liên hệ quản trị viên.");
+                }
+            }).catch(error => showError(error.message || "Không tải được danh sách đơn vị."));
+        }
+
+        attachmentNotice.textContent = isSharedAttachmentStorage()
+            ? "Tệp sẽ được lưu trên máy chủ dùng chung."
+            : "Tệp sẽ được lưu trong trình duyệt này trên thiết bị của bạn.";
+
+        attachmentInput.addEventListener("change", renderAttachmentPreview);
+
+        function renderAttachmentPreview() {
+            attachmentPreview.replaceChildren();
+            Array.from(attachmentInput.files || []).forEach(function (file) {
+                const item = document.createElement("li");
+                item.className = "list-group-item d-flex justify-content-between align-items-center px-0";
+                item.textContent = `${file.name} (${formatFileSize(file.size)})`;
+                attachmentPreview.appendChild(item);
+            });
+        }
+
+
+        // ==================================================
+        // SUBMIT FORM
+        // ==================================================
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                clearMessage();
+
+
+                // ------------------------------------------
+                // LẤY DỮ LIỆU
+                // ------------------------------------------
+
+                const title =
+                    document.getElementById(
+                        "title"
+                    ).value.trim();
+
+
+                const organizationId = isSharedAttachmentStorage()
+                    ? document.getElementById("organization_id").value
+                    : document.getElementById("organization_name").value.trim();
+
+
+                const startTime =
+                    document.getElementById(
+                        "start_time"
+                    ).value;
+
+
+                const endTime =
+                    document.getElementById(
+                        "end_time"
+                    ).value;
+
+
+                const location =
+                    document.getElementById(
+                        "location"
+                    ).value.trim();
+
+
+                const expectedParticipants =
+                    document.getElementById(
+                        "expected_participants"
+                    ).value;
+
+
+                const description =
+                    document.getElementById(
+                        "description"
+                    ).value.trim();
+
+                const selectedFiles = Array.from(attachmentInput.files || []);
+
+
+                // ------------------------------------------
+                // KIỂM TRA
+                // ------------------------------------------
+
+                if (!title) {
+
+                    showError(
+                        "Vui lòng nhập chủ đề hội nghị."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!organizationId) {
+
+                    showError(
+                        "Vui lòng nhập đơn vị đăng ký."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!startTime) {
+
+                    showError(
+                        "Vui lòng chọn thời gian bắt đầu."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!endTime) {
+
+                    showError(
+                        "Vui lòng chọn thời gian kết thúc."
+                    );
+
+                    return;
+
+                }
+
+
+                const start =
+                    new Date(startTime);
+
+
+                const end =
+                    new Date(endTime);
+
+
+                if (end <= start) {
+
+                    showError(
+                        "Thời gian kết thúc phải sau thời gian bắt đầu."
+                    );
+
+                    return;
+
+                }
+
+                const oversizedFile = selectedFiles.find(file => file.size > maxAttachmentSize);
+                if (oversizedFile) {
+                    showError(`Tệp "${oversizedFile.name}" vượt quá giới hạn 20 MB.`);
+                    return;
+                }
+
+
+                // ------------------------------------------
+                // KHÓA NÚT
+                // ------------------------------------------
+
+                submitButton.disabled = true;
+
+                submitButton.textContent =
+                    "Đang lưu...";
+
+
+                try {
+
+                    // --------------------------------------
+                    // GỌI API
+                    // --------------------------------------
+
+                    const result =
+                        await createConference({
+
+                            title: title,
+
+                            organization_id:
+                                organizationId,
+
+                            start_time:
+                                new Date(
+                                    startTime
+                                ).toISOString(),
+
+                            end_time:
+                                new Date(
+                                    endTime
+                                ).toISOString(),
+
+                            location_name: location,
+
+                            expected_participants:
+                                expectedParticipants
+                                    ? Number(
+                                        expectedParticipants
+                                    )
+                                    : 0,
+
+                            description:
+                                description
+
+                        });
+
+
+                    console.log(
+                        "Tạo hội nghị thành công:",
+                        result
+                    );
+
+
+                    // --------------------------------------
+                    // THÔNG BÁO
+                    // --------------------------------------
+
+                    const conference =
+                        result.data ||
+                        result.conference ||
+                        result;
+
+                    const uploadResults = await Promise.allSettled(
+                        selectedFiles.map(file => uploadConferenceAttachment(conference.id, file))
+                    );
+                    const uploadedCount = uploadResults.filter(item => item.status === "fulfilled").length;
+                    const failedCount = uploadResults.length - uploadedCount;
+
+
+                    showSuccess(
+
+                        "Đăng ký hội nghị thành công."
+                        +
+                        (
+                            conference.code
+                                ? " Mã hội nghị: "
+                                  + conference.code
+                                : ""
+                        )
+                        + (uploadedCount ? ` Đã đính kèm ${uploadedCount} tệp.` : "")
+
+                    );
+
+                    if (failedCount) {
+                        showError(`Hội nghị đã được tạo nhưng có ${failedCount} tệp chưa tải lên. Mở chi tiết hội nghị trong danh sách để thử tải tệp lại.`);
+                    }
+
+
+                    // --------------------------------------
+                    // RESET FORM
+                    // --------------------------------------
+
+                    form.reset();
+                    renderAttachmentPreview();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Lỗi tạo hội nghị:",
+                        error
+                    );
+
+
+                    showError(
+                        error.message ||
+                        "Không thể đăng ký hội nghị."
+                    );
+
+                } finally {
+
+                    submitButton.disabled =
+                        false;
+
+                    submitButton.textContent =
+                        "Lưu đăng ký";
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
+        // MESSAGE
+        // ==================================================
+
+        function showSuccess(message) {
+
+            messageElement.innerHTML = `
+
+                <div
+                    class="alert alert-success">
+
+                    ${escapeHtml(message)}
+
+                </div>
+
+            `;
+
+
+            messageElement.style.display =
+                "block";
+
+        }
+
+
+        function showError(message) {
+
+            messageElement.innerHTML = `
+
+                <div
+                    class="alert alert-danger">
+
+                    ${escapeHtml(message)}
+
+                </div>
+
+            `;
+
+
+            messageElement.style.display =
+                "block";
+
+        }
+
+
+        function clearMessage() {
+
+            messageElement.innerHTML = "";
+
+            messageElement.style.display =
+                "none";
+
+        }
+
+
+        // ==================================================
+        // ESCAPE HTML
+        // ==================================================
+
+        function escapeHtml(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            return String(value)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
